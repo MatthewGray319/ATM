@@ -14,15 +14,17 @@ using System;
     {
         Console.WriteLine("How much money would you like to deposit? ");
         double deposit = Double.Parse(Console.ReadLine());
-        currentUser.setBalance(deposit);
-        Console.WriteLine("Thank you for your money. Your new balance is " + currentUser.getBalance);
+        currentUser.setBalance(deposit + currentUser.getBalance());
+        Console.WriteLine("Thank you for your money. Your new balance is " + currentUser.getBalance());
+        Console.ReadKey();
+        Console.Clear();
     }
 
     void withdraw(Cardholder currentUser)
     {
         Console.WriteLine("How much money would you like to withdraw? ");
         double withdrawal = Double.Parse(Console.ReadLine());
-        if (currentUser.getBalance() > withdrawal)
+        if (currentUser.getBalance() < withdrawal)
         {
             Console.WriteLine("Insufficent Funds.");
         }
@@ -30,17 +32,23 @@ using System;
         {
             currentUser.setBalance(currentUser.getBalance() - withdrawal);
             Console.WriteLine("You're good to go! Thank you!");
+            Console.WriteLine("Your new balance is " + currentUser.getBalance());
+
         }
+        Console.ReadKey();
+        Console.Clear();
 
     }
 
     void balance(Cardholder currentUser)
     {
         Console.WriteLine("Current Balance is " + currentUser.getBalance());
+        Console.ReadKey();
+        Console.Clear();
     }
 
 
-List<Cardholder> cardholders= new List<Cardholder>();
+List<Cardholder> cardholders = new List<Cardholder>();
 cardholders.Add(new Cardholder("1234567890123456", 1234, "Don", "Lemon", 150.31));
 cardholders.Add(new Cardholder("1234567890123457", 1234, "Millie", "Vanilli", 300.42));
 
@@ -49,15 +57,18 @@ Console.WriteLine("Please insert your debit card.");
 String debitCardNum = "";
 Cardholder currentUser;
 
-while(true)
+while (true)
 {
     try
     {
         debitCardNum = Console.ReadLine();
         currentUser = cardholders.FirstOrDefault(a => a.getNum() == debitCardNum);
+        if (currentUser != null) { break; }
+        else { Console.WriteLine("Card not recognised. Please try again."); }
+
 
     }
-    catch 
+    catch
     {
         Console.WriteLine("Card not recognized. Try again.");
     }
@@ -81,7 +92,7 @@ while (true)
     }
 }
 
-Console.WriteLine("Welcome " + currentUser.getfirstName);
+Console.WriteLine("Welcome " + currentUser.getfirstName());
 int option = 0;
 
 do
